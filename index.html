@@ -93,14 +93,25 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content
 .c-gfc{color:#f87}.c-rec{color:#6d6}.c-qk{color:#db8}.c-gold{color:var(--gold)}.c-blue{color:#8af}
 .c-title{font-size:.85rem;font-weight:700;color:var(--white);margin-bottom:.2rem;line-height:1.35}
 .c-stat{font-size:1.25rem;font-weight:800;line-height:1;margin-bottom:.2rem}
-.c-desc{font-size:.73rem;color:var(--gray);line-height:1.55}
+.c-desc{font-size:.73rem;color:var(--gray);line-height:1.55;display:none;margin-top:.35rem}
 
 /* Right = FTA outcome */
 .tl-fta{padding-left:1.75rem}
 .f-lbl{font-size:.56rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:.25rem;display:block}
 .f-stat{font-size:1.25rem;font-weight:800;color:var(--gold);line-height:1;margin-bottom:.2rem}
 .f-title{font-size:.85rem;font-weight:700;color:var(--white);margin-bottom:.2rem;line-height:1.35}
-.f-desc{font-size:.73rem;color:var(--gray);line-height:1.55}
+.f-desc{font-size:.73rem;color:var(--gray);line-height:1.55;display:none;margin-top:.35rem}
+
+/* Expanded state */
+.tl-row.expanded .c-desc,
+.tl-row.expanded .f-desc{display:block}
+
+/* Tap affordance */
+.tl-row{cursor:pointer}
+.tl-row:hover .tl-pin .yr{color:var(--gold2)}
+.row-toggle{display:block;font-size:.62rem;color:var(--gray);margin-top:.3rem;line-height:1;transition:color .2s;user-select:none}
+.tl-row.expanded .row-toggle{color:var(--gold)}
+.tl-row:hover:not(.expanded) .row-toggle{color:var(--gray2)}
 
 /* CHINA CHART */
 #china-chart{background:var(--navy2);padding:0 2rem 5rem}
@@ -293,7 +304,7 @@ footer strong{color:var(--gray2)}
   <div class="sec-hd">
     <span class="kicker">The China FTA Story</span>
     <h2>The Deal That Was Always Bigger Than It Looked</h2>
-    <p>Read left to right: what the world threw at New Zealand — and what the FTA delivered in spite of it.</p>
+    <p>Two decades of a deal that kept on delivering. Tap any row to read the full story behind the numbers.</p>
   </div>
   <div class="tl-wrap">
     <div class="tl-line"></div>
@@ -313,7 +324,7 @@ footer strong{color:var(--gray2)}
         <div class="c-stat c-gold">9%+</div>
         <div class="c-desc">Annual GDP growth. The world's factory is becoming its largest consumer market. The timing for an FTA couldn't be better.</div>
       </div>
-      <div class="tl-pin pin-m"><span class="yr">2004–<br>2007</span><i></i></div>
+      <div class="tl-pin pin-m"><span class="yr">2004–<br>2007</span><i></i><span class="row-toggle">+</span></div>
       <div class="tl-fta">
         <span class="f-lbl">Negotiations</span>
         <div class="f-stat">NZ$225–350M</div>
@@ -330,7 +341,7 @@ footer strong{color:var(--gray2)}
         <div class="c-stat c-gold">+48%</div>
         <div class="c-desc">Global dairy price rise in 2007 alone — before the FTA even enters force. The demand signal is already there.</div>
       </div>
-      <div class="tl-pin pin-m"><span class="yr">Apr<br>2008</span><i></i></div>
+      <div class="tl-pin pin-m"><span class="yr">Apr<br>2008</span><i></i><span class="row-toggle">+</span></div>
       <div class="tl-fta">
         <span class="f-lbl">Deal Signed</span>
         <div class="f-stat">First</div>
@@ -350,7 +361,7 @@ footer strong{color:var(--gray2)}
         <div class="c-stat c-gfc">−3.3%</div>
         <div class="c-desc">NZ GDP over 5 consecutive quarters. NZ enters recession ahead of most OECD peers. Every traditional export market contracts at once.</div>
       </div>
-      <div class="tl-pin pin-s"><span class="yr">Sep–Oct<br>2008</span><i></i></div>
+      <div class="tl-pin pin-s"><span class="yr">Sep–Oct<br>2008</span><i></i><span class="row-toggle">+</span></div>
       <div class="tl-fta">
         <span class="f-lbl">FTA Enters Force</span>
         <div class="f-stat">Oct 1</div>
@@ -367,7 +378,7 @@ footer strong{color:var(--gray2)}
         <div class="c-stat c-gfc">¥4T</div>
         <div class="c-desc">"The biggest fiscal stimulus in post-war history." — RBNZ Governor Bollard. NZ's commodities — logs, dairy, meat — are exactly what China's construction boom needs.</div>
       </div>
-      <div class="tl-pin pin-r"><span class="yr">Nov<br>2008</span><i></i></div>
+      <div class="tl-pin pin-r"><span class="yr">Nov<br>2008</span><i></i><span class="row-toggle">+</span></div>
       <div class="tl-fta">
         <span class="f-lbl">Year One Result</span>
         <div class="f-stat">+60%</div>
@@ -387,7 +398,7 @@ footer strong{color:var(--gray2)}
         <div class="c-stat c-qk">NZ$40B</div>
         <div class="c-desc">Total rebuild cost. NZ$13–15B Crown liability. Operating deficit peaks at 8.9% of GDP. A second recession looks inevitable.</div>
       </div>
-      <div class="tl-pin pin-s"><span class="yr">Feb<br>2011</span><i></i></div>
+      <div class="tl-pin pin-s"><span class="yr">Feb<br>2011</span><i></i><span class="row-toggle">+</span></div>
       <div class="tl-fta">
         <span class="f-lbl">The Offset</span>
         <div class="f-stat">0.2–0.4%</div>
@@ -404,7 +415,7 @@ footer strong{color:var(--gray2)}
         <div class="c-stat c-gold">700M+</div>
         <div class="c-desc">Chinese consumers entering the middle class. Urban dwellers consume 3× more dairy than rural. Protein demand is structural, not cyclical.</div>
       </div>
-      <div class="tl-pin pin-m"><span class="yr">2013</span><i></i></div>
+      <div class="tl-pin pin-m"><span class="yr">2013</span><i></i><span class="row-toggle">+</span></div>
       <div class="tl-fta">
         <span class="f-lbl">China Becomes #1</span>
         <div class="f-stat">NZ$16.8B</div>
@@ -424,7 +435,7 @@ footer strong{color:var(--gray2)}
         <div class="c-stat c-gold">3.7%</div>
         <div class="c-desc">GDP growth. First operating surplus since pre-GFC. Canterbury rebuild at 1.5% of NZ potential GDP per year. Terms of trade at their highest since 1973.</div>
       </div>
-      <div class="tl-pin pin-p"><span class="yr">2014</span><i></i></div>
+      <div class="tl-pin pin-p"><span class="yr">2014</span><i></i><span class="row-toggle">+</span></div>
       <div class="tl-fta">
         <span class="f-lbl">Peak Year</span>
         <div class="f-stat">NZ$8.40/kg</div>
@@ -444,7 +455,7 @@ footer strong{color:var(--gray2)}
         <div class="c-stat c-gfc">−54%</div>
         <div class="c-desc">Fonterra payout collapse: NZ$8.40 → NZ$3.85/kg. Farm-sector cash deficit NZ$2.7B. The rockstar era ends — but not because of the FTA.</div>
       </div>
-      <div class="tl-pin pin-s"><span class="yr">2015–<br>2016</span><i></i></div>
+      <div class="tl-pin pin-s"><span class="yr">2015–<br>2016</span><i></i><span class="row-toggle">+</span></div>
       <div class="tl-fta">
         <span class="f-lbl">FTA Provides the Floor</span>
         <div class="f-stat">NZ$12B+</div>
@@ -464,7 +475,7 @@ footer strong{color:var(--gray2)}
         <div class="c-stat c-blue">+40.8%</div>
         <div class="c-desc">Q1 2025 NZ dairy exports to China — even amid global headwinds, the FTA channel deepens year on year.</div>
       </div>
-      <div class="tl-pin pin-m"><span class="yr">2022–<br>2024</span><i></i></div>
+      <div class="tl-pin pin-m"><span class="yr">2022–<br>2024</span><i></i><span class="row-toggle">+</span></div>
       <div class="tl-fta">
         <span class="f-lbl">Upgrade + Full Dairy Access</span>
         <div class="f-stat">NZ$330M</div>
@@ -481,7 +492,7 @@ footer strong{color:var(--gray2)}
         <div class="c-stat c-gold">25%</div>
         <div class="c-desc">China's share of all NZ goods exports — a relationship so large it creates both resilience and exposure simultaneously.</div>
       </div>
-      <div class="tl-pin pin-p"><span class="yr">2025</span><i></i></div>
+      <div class="tl-pin pin-p"><span class="yr">2025</span><i></i><span class="row-toggle">+</span></div>
       <div class="tl-fta">
         <span class="f-lbl">The Verdict</span>
         <div class="f-stat">NZ$38.26B</div>
@@ -902,17 +913,21 @@ const tlObserver = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); });
 }, { threshold: 0.15 });
 
-document.querySelectorAll('.tl-row').forEach(el => tlObserver.observe(el));
+document.querySelectorAll('.tl-row').forEach((el, i) => {
+  el.style.transitionDelay = `${i * 0.04}s`;
+  tlObserver.observe(el);
+  el.addEventListener('click', () => {
+    el.classList.toggle('expanded');
+    const tog = el.querySelector('.row-toggle');
+    if (tog) tog.textContent = el.classList.contains('expanded') ? 'u2212' : '+';
+  });
+});
 
 // ─── INIT ─────────────────────────────────────────────────
 initChinaChart();
 initMiniCharts();
 updateDashboard();
 
-// Stagger timeline entries on load
-document.querySelectorAll('.tl-row').forEach((el, i) => {
-  el.style.transitionDelay = `${i * 0.05}s`;
-});
 </script>
 </body>
 </html>
