@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NZ FTA Story: China & India</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --navy:#0a1628;--navy2:#0d1e38;--navy3:#132040;
+  --gold:#f0a500;--gold2:#ffd166;
+  --red:#de2910;
+  --saffron:#ff9933;--saffron2:#ffd700;
+  --igreen:#138808;
+  --white:#ffffff;--gray:#8892a4;--gray2:#c5ccd6;
+  --card:rgba(255,255,255,0.04);--border:rgba(255,255,255,0.08);
+}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--navy);color:var(--white);overflow-x:hidden}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:.9rem 2rem;background:rgba(10,22,40,.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(240,165,0,.15)}
+.nav-logo{font-size:.75rem;font-weight:800;letter-spacing:.15em;color:var(--gold);text-transform:uppercase}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{color:var(--gray);text-decoration:none;font-size:.8rem;letter-spacing:.05em;transition:color .2s}
+.nav-links a:hover{color:var(--gold)}
+
+/* HERO */
+#hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:7rem 2rem 5rem;position:relative;background:radial-gradient(ellipse at 50% 40%, #1a2a4a 0%, #0a1628 70%);overflow:hidden}
+.hero-glow{position:absolute;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(240,165,0,.07) 0%,transparent 65%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none}
+.hero-kicker{font-size:.7rem;letter-spacing:.35em;color:var(--gold);text-transform:uppercase;margin-bottom:1.2rem;opacity:.8}
+.hero-title{font-size:clamp(2.8rem,6vw,5.5rem);font-weight:900;line-height:1.05;margin-bottom:1.5rem;background:linear-gradient(135deg,#fff 20%,var(--gold) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:1.05rem;color:var(--gray2);max-width:580px;line-height:1.7;margin-bottom:3rem}
+.hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;max-width:820px;width:100%}
+.hstat{background:var(--card);border:1px solid rgba(240,165,0,.12);border-radius:14px;padding:1.5rem 1.25rem}
+.hstat .n{font-size:2rem;font-weight:800;color:var(--gold);display:block;line-height:1}
+.hstat .l{font-size:.72rem;color:var(--gray);margin-top:.5rem;line-height:1.4}
+.scroll-cue{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.5rem;color:var(--gray);font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;animation:bob 2s ease-in-out infinite}
+.scroll-cue svg{width:20px;height:20px;opacity:.5}
+@keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(7px)}}
+
+/* SECTION HEADER */
+.sec-hd{text-align:center;padding:5rem 2rem 3rem}
+.sec-hd h2{font-size:clamp(1.8rem,4vw,3rem);font-weight:800;margin-bottom:.75rem}
+.sec-hd p{color:var(--gray);max-width:580px;margin:0 auto;line-height:1.7;font-size:.95rem}
+.sec-hd .kicker{font-size:.65rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:.75rem;display:block}
+
+/* TIMELINE */
+#timeline{background:var(--navy2);padding-bottom:5rem}
+.tl-wrap{position:relative;max-width:1100px;margin:0 auto;padding:0 2rem}
+.tl-line{position:absolute;left:50%;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,transparent,rgba(240,165,0,.4) 5%,rgba(240,165,0,.4) 95%,transparent);transform:translateX(-50%)}
+
+/* Column headers */
+.tl-col-heads{display:grid;grid-template-columns:1fr 80px 1fr;padding:0 0 2.5rem}
+.tl-ch{font-size:.6rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase;display:flex;align-items:center;gap:.6rem}
+.tl-ch.left{justify-content:flex-end;color:var(--gray)}
+.tl-ch.right{color:var(--gold)}
+.tl-ch.left::after{content:'';height:1px;width:40px;background:rgba(136,146,164,.25)}
+.tl-ch.right::before{content:'';height:1px;width:40px;background:rgba(240,165,0,.3)}
+
+/* Era banner */
+.tl-era{display:flex;align-items:center;gap:1rem;padding:.75rem 0;margin:.5rem 0 1.25rem}
+.tl-era::before,.tl-era::after{content:'';flex:1;height:1px}
+.era-gfc::before,.era-gfc::after{background:rgba(222,41,16,.25)}
+.era-recovery::before,.era-recovery::after{background:rgba(19,136,8,.2)}
+.era-rockstar::before,.era-rockstar::after{background:rgba(240,165,0,.25)}
+.era-crash::before,.era-crash::after{background:rgba(222,41,16,.25)}
+.era-upgrade::before,.era-upgrade::after{background:rgba(100,160,255,.2)}
+.tl-era-lbl{font-size:.58rem;font-weight:800;letter-spacing:.22em;text-transform:uppercase;white-space:nowrap;padding:.22rem .85rem;border-radius:100px}
+.era-gfc .tl-era-lbl{background:rgba(222,41,16,.1);color:#f87;border:1px solid rgba(222,41,16,.18)}
+.era-recovery .tl-era-lbl{background:rgba(19,136,8,.1);color:#6d6;border:1px solid rgba(19,136,8,.18)}
+.era-rockstar .tl-era-lbl{background:rgba(240,165,0,.1);color:var(--gold);border:1px solid rgba(240,165,0,.18)}
+.era-crash .tl-era-lbl{background:rgba(222,41,16,.1);color:#f87;border:1px solid rgba(222,41,16,.18)}
+.era-upgrade .tl-era-lbl{background:rgba(100,160,255,.1);color:#8af;border:1px solid rgba(100,160,255,.18)}
+
+/* Row: context + pin + fta */
+.tl-row{display:grid;grid-template-columns:1fr 80px 1fr;margin-bottom:1.75rem;opacity:0;transform:translateY(18px);transition:opacity .55s ease,transform .55s ease;align-items:start}
+.tl-row.vis{opacity:1;transform:translateY(0)}
+
+/* Center pin */
+.tl-pin{display:flex;flex-direction:column;align-items:center;gap:.35rem;padding-top:.4rem}
+.tl-pin .yr{font-size:.58rem;font-weight:800;letter-spacing:.05em;color:var(--gray);text-align:center;line-height:1.3}
+.tl-pin i{display:block;width:11px;height:11px;border-radius:50%;border:2px solid var(--navy2)}
+.pin-m i{background:var(--gold);box-shadow:0 0 0 2px rgba(240,165,0,.5),0 0 10px rgba(240,165,0,.35)}
+.pin-s i{background:#f87;box-shadow:0 0 0 2px rgba(240,100,100,.5),0 0 10px rgba(240,100,100,.3)}
+.pin-r i{background:#6d6;box-shadow:0 0 0 2px rgba(80,200,80,.5),0 0 10px rgba(80,200,80,.25)}
+.pin-p i{background:#8af;box-shadow:0 0 0 2px rgba(120,180,255,.5),0 0 10px rgba(120,180,255,.25)}
+
+/* Left = World/NZ context */
+.tl-ctx{padding-right:1.75rem;text-align:right}
+.c-lbl{font-size:.56rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;margin-bottom:.25rem;display:block}
+.c-gfc{color:#f87}.c-rec{color:#6d6}.c-qk{color:#db8}.c-gold{color:var(--gold)}.c-blue{color:#8af}
+.c-title{font-size:.85rem;font-weight:700;color:var(--white);margin-bottom:.2rem;line-height:1.35}
+.c-stat{font-size:1.25rem;font-weight:800;line-height:1;margin-bottom:.2rem}
+.c-desc{font-size:.73rem;color:var(--gray);line-height:1.55}
+
+/* Right = FTA outcome */
+.tl-fta{padding-left:1.75rem}
+.f-lbl{font-size:.56rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:.25rem;display:block}
+.f-stat{font-size:1.25rem;font-weight:800;color:var(--gold);line-height:1;margin-bottom:.2rem}
+.f-title{font-size:.85rem;font-weight:700;color:var(--white);margin-bottom:.2rem;line-height:1.35}
+.f-desc{font-size:.73rem;color:var(--gray);line-height:1.55}
+
+/* CHINA CHART */
+#china-chart{background:var(--navy2);padding:0 2rem 5rem}
+.chart-box{max-width:900px;margin:0 auto;background:rgba(255,255,255,.025);border:1px solid rgba(240,165,0,.12);border-radius:16px;padding:2rem}
+.chart-box h3{font-size:1.1rem;font-weight:700;margin-bottom:.25rem}
+.chart-box p{font-size:.78rem;color:var(--gray);margin-bottom:1.5rem}
+
+/* TRANSITION */
+#transition{min-height:55vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:6rem 2rem;background:linear-gradient(180deg,var(--navy2) 0%,#100800 100%);position:relative;overflow:hidden}
+#transition::before{content:'';position:absolute;width:900px;height:900px;border-radius:50%;background:radial-gradient(circle,rgba(255,153,51,.05) 0%,transparent 65%);top:50%;left:50%;transform:translate(-50%,-50%)}
+.tr-kicker{font-size:.65rem;letter-spacing:.4em;color:var(--saffron);text-transform:uppercase;margin-bottom:1rem}
+.tr-title{font-size:clamp(2rem,5vw,4.2rem);font-weight:900;line-height:1.1;margin-bottom:1.5rem}
+.tr-title span{background:linear-gradient(135deg,var(--saffron),var(--saffron2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.tr-body{color:var(--gray2);max-width:620px;line-height:1.75;font-size:1rem}
+.tr-divider{display:flex;align-items:center;gap:1.5rem;margin:2rem 0;color:var(--gray)}
+.tr-divider::before,.tr-divider::after{content:'';flex:1;height:1px;background:rgba(255,153,51,.2)}
+.tr-divider span{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--saffron);opacity:.7}
+
+/* INDIA DASHBOARD */
+#india{background:#080f1a;padding-bottom:6rem}
+#india .sec-hd{background:linear-gradient(180deg,#100800 0%,#080f1a 100%)}
+#india .kicker{color:var(--saffron)}
+
+/* CONTROLS */
+.controls{max-width:1200px;margin:0 auto 2.5rem;padding:0 2rem}
+.controls-inner{background:rgba(255,153,51,.04);border:1px solid rgba(255,153,51,.15);border-radius:16px;padding:1.75rem 2rem;display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:center}
+.ctrl-grp{display:flex;flex-direction:column;gap:.6rem}
+.ctrl-label{font-size:.65rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--saffron)}
+.ctrl-desc{font-size:.78rem;color:var(--gray)}
+.slider-row{display:flex;align-items:center;gap:.75rem}
+.sl-lbl{font-size:.72rem;color:var(--gray);width:72px}
+.sl-lbl.hi{text-align:right;color:var(--gold);width:72px}
+input[type=range]{-webkit-appearance:none;appearance:none;flex:1;height:4px;border-radius:2px;background:rgba(255,255,255,.1);outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--saffron);cursor:pointer;box-shadow:0 0 12px rgba(255,153,51,.5)}
+.sl-val{font-size:1rem;font-weight:800;color:var(--saffron);min-width:48px;text-align:center}
+.toggle-row{display:flex;align-items:center;gap:1rem}
+.toggle{position:relative;width:56px;height:28px;flex-shrink:0}
+.toggle input{opacity:0;width:0;height:0;position:absolute}
+.tslider{position:absolute;cursor:pointer;inset:0;background:rgba(255,255,255,.1);border-radius:28px;transition:.3s;border:2px solid rgba(255,255,255,.1)}
+.tslider:before{position:absolute;content:'';height:20px;width:20px;left:2px;bottom:2px;background:#fff;border-radius:50%;transition:.3s}
+.toggle input:checked+.tslider{background:linear-gradient(135deg,#ff9933,#ffd700);border-color:#ff9933;box-shadow:0 0 20px rgba(255,153,51,.5)}
+.toggle input:checked+.tslider:before{transform:translateX(28px)}
+.tgl-text{display:flex;flex-direction:column;gap:.2rem}
+.tgl-name{font-size:.85rem;font-weight:700;color:var(--white)}
+.tgl-note{font-size:.72rem;color:var(--gray)}
+
+/* SUMMARY ROW */
+.summary-row{max-width:1200px;margin:0 auto 2rem;padding:0 2rem;display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+.sum-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1rem 1.25rem;text-align:center}
+.sum-card .sv{font-size:1.1rem;font-weight:800;color:var(--saffron);display:block}
+.sum-card .sl{font-size:.68rem;color:var(--gray);margin-top:.3rem;line-height:1.4}
+
+/* THREE COLUMNS */
+.cols{max-width:1200px;margin:0 auto;padding:0 2rem;display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.col{border-radius:16px;overflow:hidden;border:1px solid var(--border);background:var(--card);display:flex;flex-direction:column}
+.col-hd{padding:1.25rem 1.5rem;border-bottom:1px solid var(--border)}
+.col-period{font-size:.6rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase;margin-bottom:.4rem}
+.c0 .col-period{color:#7af}
+.c1 .col-period{color:var(--saffron)}
+.c2 .col-period{color:var(--gold)}
+.col-year{font-size:1.8rem;font-weight:900;line-height:1;margin-bottom:.2rem}
+.col-sub{font-size:.75rem;color:var(--gray)}
+.col-body{padding:1.25rem 1.5rem;display:flex;flex-direction:column;gap:.85rem;flex:1}
+.mcard{background:rgba(255,255,255,.04);border-radius:10px;padding:.9rem 1rem}
+.mlbl{font-size:.62rem;color:var(--gray);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.3rem}
+.mval{font-size:1.25rem;font-weight:800;color:var(--white);transition:all .45s ease}
+.mdelta{font-size:.72rem;margin-top:.2rem;color:#5d5;transition:all .45s ease}
+.dairy-note{display:none;margin-top:.35rem;padding:.4rem .65rem;background:rgba(255,153,51,.1);border:1px solid rgba(255,153,51,.25);border-radius:7px;font-size:.7rem;color:var(--saffron);font-weight:600;line-height:1.4}
+.dairy-note.on{display:block}
+.ctx{font-size:.75rem;color:var(--gray);padding:.7rem .9rem;background:rgba(255,255,255,.03);border-radius:8px;border-left:3px solid rgba(255,153,51,.25);line-height:1.55}
+.col-chart-wrap{padding:0 1rem 1rem}
+
+/* CALLOUT */
+.callout{max-width:1200px;margin:2.5rem auto 0;padding:0 2rem}
+.callout-inner{background:rgba(255,153,51,.04);border:1px solid rgba(255,153,51,.18);border-radius:16px;padding:2rem;display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;text-align:center}
+.ci h4{font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gray);margin-bottom:.5rem}
+.ci .big{font-size:1.7rem;font-weight:800;color:var(--saffron);transition:all .45s ease}
+.ci .sm{font-size:.75rem;color:var(--gray);margin-top:.25rem}
+
+/* FOOTER */
+footer{background:#050c14;padding:3rem 2rem;text-align:center;border-top:1px solid rgba(255,255,255,.05)}
+footer p{font-size:.72rem;color:var(--gray);line-height:1.7;max-width:700px;margin:0 auto}
+footer strong{color:var(--gray2)}
+
+/* RESPONSIVE */
+@media(max-width:860px){
+
+  /* Hero */
+  .hero-stats{grid-template-columns:1fr 1fr}
+
+  /* India dashboard */
+  .cols,.summary-row,.callout-inner{grid-template-columns:1fr}
+  .controls-inner{grid-template-columns:1fr}
+
+  /* Timeline: collapse dual-track to stacked single-track */
+  .tl-col-heads{display:none}
+
+  /* Line moves to left edge */
+  .tl-line{left:20px;transform:none}
+
+  /* Each row: pin on left, cards stacked to its right */
+  .tl-row{
+    display:grid;
+    grid-template-columns:44px 1fr;
+    grid-template-rows:auto auto;
+    grid-template-areas:
+      "pin ctx"
+      "pin fta";
+    column-gap:0;
+    row-gap:.6rem;
+    margin-bottom:1.5rem;
+  }
+
+  .tl-pin{
+    grid-area:pin;
+    flex-direction:column;
+    align-items:center;
+    padding-top:.3rem;
+  }
+
+  .tl-ctx{
+    grid-area:ctx;
+    text-align:left;
+    padding-right:0;
+    padding-left:1rem;
+    padding-bottom:.5rem;
+    border-bottom:1px solid rgba(255,255,255,.06);
+  }
+
+  .tl-fta{
+    grid-area:fta;
+    padding-left:1rem;
+    padding-top:.5rem;
+  }
+
+  /* Era bands */
+  .tl-era{margin:.25rem 0 1rem}
+
+  /* Stat sizes slightly smaller on mobile */
+  .c-stat,.f-stat{font-size:1.05rem}
+}
+
+@media(max-width:500px){
+  .hero-stats{grid-template-columns:1fr}
+  .tl-wrap{padding:0 1rem}
+  .c-stat,.f-stat{font-size:1rem}
+  .c-title,.f-title{font-size:.8rem}
+  .c-desc,.f-desc{font-size:.7rem}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-logo">NZ Free Trade Agreements</span>
+  <ul class="nav-links">
+    <li><a href="#timeline">China Story</a></li>
+    <li><a href="#india">India Forecast</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-glow"></div>
+  <p class="hero-kicker">Two Deals. One Story of Ambition.</p>
+  <h1 class="hero-title">From Beijing to New Delhi</h1>
+  <p class="hero-sub">How an underestimated deal with China built a rockstar economy — and what the India FTA could mean if we dare to read the same signals differently.</p>
+  <div class="hero-stats">
+    <div class="hstat">
+      <span class="n">4.8×</span>
+      <span class="l">NZ–China two-way trade growth since FTA (2008–2025)</span>
+    </div>
+    <div class="hstat">
+      <span class="n">+987%</span>
+      <span class="l">NZ milk powder export volume to China since 2008</span>
+    </div>
+    <div class="hstat">
+      <span class="n">700M</span>
+      <span class="l">India's projected middle class by 2030 — larger than the EU</span>
+    </div>
+  </div>
+  <div class="scroll-cue">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+    Scroll to explore
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section id="timeline">
+  <div class="sec-hd">
+    <span class="kicker">The China FTA Story</span>
+    <h2>The Deal That Was Always Bigger Than It Looked</h2>
+    <p>Read left to right: what the world threw at New Zealand — and what the FTA delivered in spite of it.</p>
+  </div>
+  <div class="tl-wrap">
+    <div class="tl-line"></div>
+
+    <!-- Column headers -->
+    <div class="tl-col-heads">
+      <div class="tl-ch left">World &amp; NZ Context</div>
+      <div></div>
+      <div class="tl-ch right">What the FTA Delivered</div>
+    </div>
+
+    <!-- 2004-2007: Setup -->
+    <div class="tl-row">
+      <div class="tl-ctx">
+        <span class="c-lbl c-gold">China's Ascent</span>
+        <div class="c-title">China joins WTO (2001). Economy growing at 9–10%/yr. Urbanisation accelerating rapidly.</div>
+        <div class="c-stat c-gold">9%+</div>
+        <div class="c-desc">Annual GDP growth. The world's factory is becoming its largest consumer market. The timing for an FTA couldn't be better.</div>
+      </div>
+      <div class="tl-pin pin-m"><span class="yr">2004–<br>2007</span><i></i></div>
+      <div class="tl-fta">
+        <span class="f-lbl">Negotiations</span>
+        <div class="f-stat">NZ$225–350M</div>
+        <div class="f-title">Official annual export uplift projection</div>
+        <div class="f-desc">NZ–China Joint Feasibility Study. CGE modelling. A cautious ceiling. The models have no mechanism to see what China is becoming.</div>
+      </div>
+    </div>
+
+    <!-- Apr 2008: Signing -->
+    <div class="tl-row">
+      <div class="tl-ctx">
+        <span class="c-lbl c-gold">Global Markets</span>
+        <div class="c-title">Commodity super-cycle near its peak. Dairy prices surging worldwide.</div>
+        <div class="c-stat c-gold">+48%</div>
+        <div class="c-desc">Global dairy price rise in 2007 alone — before the FTA even enters force. The demand signal is already there.</div>
+      </div>
+      <div class="tl-pin pin-m"><span class="yr">Apr<br>2008</span><i></i></div>
+      <div class="tl-fta">
+        <span class="f-lbl">Deal Signed</span>
+        <div class="f-stat">First</div>
+        <div class="f-title">Developed nation to sign an FTA with China</div>
+        <div class="f-desc">Day one: 35% of NZ exports duty-free. Dairy, timber, seafood flagged as the headline beneficiaries.</div>
+      </div>
+    </div>
+
+    <!-- ERA: GFC -->
+    <div class="tl-era era-gfc"><div class="tl-era-lbl">GFC Recession — 2008–2009</div></div>
+
+    <!-- Oct 2008: Double shock -->
+    <div class="tl-row">
+      <div class="tl-ctx">
+        <span class="c-lbl c-gfc">Global Shock</span>
+        <div class="c-title">Lehman Brothers collapses. Global credit markets freeze. Recession spreads across OECD.</div>
+        <div class="c-stat c-gfc">−3.3%</div>
+        <div class="c-desc">NZ GDP over 5 consecutive quarters. NZ enters recession ahead of most OECD peers. Every traditional export market contracts at once.</div>
+      </div>
+      <div class="tl-pin pin-s"><span class="yr">Sep–Oct<br>2008</span><i></i></div>
+      <div class="tl-fta">
+        <span class="f-lbl">FTA Enters Force</span>
+        <div class="f-stat">Oct 1</div>
+        <div class="f-title">Two weeks after Lehman. Tariff cuts begin immediately.</div>
+        <div class="f-desc">The deal's timing looks catastrophic on paper. In practice, China is about to make it the lifeline no forecaster anticipated.</div>
+      </div>
+    </div>
+
+    <!-- Nov 2008: China stimulus -->
+    <div class="tl-row">
+      <div class="tl-ctx">
+        <span class="c-lbl c-gfc">China Responds</span>
+        <div class="c-title">¥4 Trillion stimulus announced. Infrastructure and property construction ignites.</div>
+        <div class="c-stat c-gfc">¥4T</div>
+        <div class="c-desc">"The biggest fiscal stimulus in post-war history." — RBNZ Governor Bollard. NZ's commodities — logs, dairy, meat — are exactly what China's construction boom needs.</div>
+      </div>
+      <div class="tl-pin pin-r"><span class="yr">Nov<br>2008</span><i></i></div>
+      <div class="tl-fta">
+        <span class="f-lbl">Year One Result</span>
+        <div class="f-stat">+60%</div>
+        <div class="f-title">NZ exports to China — in the first year of the FTA</div>
+        <div class="f-desc">Already 3–4× the entire NIA annual uplift forecast. NZ ends up 7th least affected OECD nation. The deal didn't cause China's stimulus — but it positioned NZ to capture it.</div>
+      </div>
+    </div>
+
+    <!-- ERA: Recovery -->
+    <div class="tl-era era-recovery"><div class="tl-era-lbl">Recovery — China Demand Drives NZ Income</div></div>
+
+    <!-- Feb 2011: Earthquake -->
+    <div class="tl-row">
+      <div class="tl-ctx">
+        <span class="c-lbl c-qk">Natural Disaster</span>
+        <div class="c-title">Christchurch earthquake. 185 lives lost. City destroyed.</div>
+        <div class="c-stat c-qk">NZ$40B</div>
+        <div class="c-desc">Total rebuild cost. NZ$13–15B Crown liability. Operating deficit peaks at 8.9% of GDP. A second recession looks inevitable.</div>
+      </div>
+      <div class="tl-pin pin-s"><span class="yr">Feb<br>2011</span><i></i></div>
+      <div class="tl-fta">
+        <span class="f-lbl">The Offset</span>
+        <div class="f-stat">0.2–0.4%</div>
+        <div class="f-title">NZ GDP uplift per 1% China growth (Treasury WP 13/17)</div>
+        <div class="f-desc">China's demand keeps export income flowing through the disaster. NZ avoids a double-dip recession. The FTA's channel is the structural reason this is possible.</div>
+      </div>
+    </div>
+
+    <!-- 2013: China #1 -->
+    <div class="tl-row">
+      <div class="tl-ctx">
+        <span class="c-lbl c-gold">China's Rise</span>
+        <div class="c-title">China surpasses Japan as the world's 2nd largest economy. Urban middle class exploding.</div>
+        <div class="c-stat c-gold">700M+</div>
+        <div class="c-desc">Chinese consumers entering the middle class. Urban dwellers consume 3× more dairy than rural. Protein demand is structural, not cyclical.</div>
+      </div>
+      <div class="tl-pin pin-m"><span class="yr">2013</span><i></i></div>
+      <div class="tl-fta">
+        <span class="f-lbl">China Becomes #1</span>
+        <div class="f-stat">NZ$16.8B</div>
+        <div class="f-title">Two-way trade — China overtakes Australia as NZ's top export destination</div>
+        <div class="f-desc">Year five. The NIA's annual uplift forecast has been exceeded in individual quarters. Three Treasury working papers published documenting China as NZ's structural income engine.</div>
+      </div>
+    </div>
+
+    <!-- ERA: Rockstar -->
+    <div class="tl-era era-rockstar"><div class="tl-era-lbl">Rockstar Economy — 2013–2015</div></div>
+
+    <!-- 2014: Rockstar -->
+    <div class="tl-row">
+      <div class="tl-ctx">
+        <span class="c-lbl c-gold">HSBC, January 2014</span>
+        <div class="c-title">"Rockstar Economy" — Paul Bloxham coins the phrase on CNBC.</div>
+        <div class="c-stat c-gold">3.7%</div>
+        <div class="c-desc">GDP growth. First operating surplus since pre-GFC. Canterbury rebuild at 1.5% of NZ potential GDP per year. Terms of trade at their highest since 1973.</div>
+      </div>
+      <div class="tl-pin pin-p"><span class="yr">2014</span><i></i></div>
+      <div class="tl-fta">
+        <span class="f-lbl">Peak Year</span>
+        <div class="f-stat">NZ$8.40/kg</div>
+        <div class="f-title">Fonterra payout — China absorbs ⅓ of all NZ dairy exports</div>
+        <div class="f-desc">China takes 21% of all NZ merchandise exports. Terms of trade: highest since 1973. The FTA built the architecture. China's middle class filled it with demand.</div>
+      </div>
+    </div>
+
+    <!-- ERA: Dairy Crash -->
+    <div class="tl-era era-crash"><div class="tl-era-lbl">Dairy Crash — 2015–2016</div></div>
+
+    <!-- 2015-16: Crash -->
+    <div class="tl-row">
+      <div class="tl-ctx">
+        <span class="c-lbl c-gfc">Global Oversupply</span>
+        <div class="c-title">Dairy glut. Russia demand shock. Chinese slowdown. Canterbury rebuild plateaus.</div>
+        <div class="c-stat c-gfc">−54%</div>
+        <div class="c-desc">Fonterra payout collapse: NZ$8.40 → NZ$3.85/kg. Farm-sector cash deficit NZ$2.7B. The rockstar era ends — but not because of the FTA.</div>
+      </div>
+      <div class="tl-pin pin-s"><span class="yr">2015–<br>2016</span><i></i></div>
+      <div class="tl-fta">
+        <span class="f-lbl">FTA Provides the Floor</span>
+        <div class="f-stat">NZ$12B+</div>
+        <div class="f-title">NZ China exports — still 5× the 2008 baseline in a crash year</div>
+        <div class="f-desc">The deal is so large by now that a 54% payout crash still leaves China trade at multiples of what the NIA ever projected at signing.</div>
+      </div>
+    </div>
+
+    <!-- ERA: Upgrade -->
+    <div class="tl-era era-upgrade"><div class="tl-era-lbl">FTA Upgrade Era — 2022 to Present</div></div>
+
+    <!-- 2022-2024: Upgrade + full dairy -->
+    <div class="tl-row">
+      <div class="tl-ctx">
+        <span class="c-lbl c-blue">Post-COVID</span>
+        <div class="c-title">Supply chain disruption. Cost of living crisis. NZ households squeezed.</div>
+        <div class="c-stat c-blue">+40.8%</div>
+        <div class="c-desc">Q1 2025 NZ dairy exports to China — even amid global headwinds, the FTA channel deepens year on year.</div>
+      </div>
+      <div class="tl-pin pin-m"><span class="yr">2022–<br>2024</span><i></i></div>
+      <div class="tl-fta">
+        <span class="f-lbl">Upgrade + Full Dairy Access</span>
+        <div class="f-stat">NZ$330M</div>
+        <div class="f-title">Annual savings from complete dairy tariff elimination (Jan 2024)</div>
+        <div class="f-desc">99% of NZ exports duty-free. NZ the only country with full dairy access to China. Milk powder exports up 987% in volume since 2008.</div>
+      </div>
+    </div>
+
+    <!-- 2025: Verdict -->
+    <div class="tl-row">
+      <div class="tl-ctx">
+        <span class="c-lbl c-gold">Global Trade Realignment</span>
+        <div class="c-title">US tariff wars. Indo-Pacific blocs reshaping. NZ navigates dependency risk.</div>
+        <div class="c-stat c-gold">25%</div>
+        <div class="c-desc">China's share of all NZ goods exports — a relationship so large it creates both resilience and exposure simultaneously.</div>
+      </div>
+      <div class="tl-pin pin-p"><span class="yr">2025</span><i></i></div>
+      <div class="tl-fta">
+        <span class="f-lbl">The Verdict</span>
+        <div class="f-stat">NZ$38.26B</div>
+        <div class="f-title">Two-way trade — 4.8× the 2008 baseline of NZ$8B</div>
+        <div class="f-desc">The NIA projected NZ$225–350M/year. Every year since 2009 has exceeded that figure. The models couldn't see what China was becoming — and neither could the critics.</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CHINA CHART -->
+<section id="china-chart">
+  <div class="chart-box">
+    <h3>NZ Exports to China: What Was Forecast vs What Happened</h3>
+    <p>NIA projection based on NZ$225–350M/year uplift model. Actual data from Stats NZ / MFAT. The gap by 2024 is NZ$14.25B — in a single year.</p>
+    <canvas id="chinaChart" height="280"></canvas>
+  </div>
+</section>
+
+<!-- TRANSITION -->
+<section id="transition">
+  <p class="tr-kicker">Now Arriving</p>
+  <h2 class="tr-title">The <span>India</span> Opportunity</h2>
+  <div class="tr-divider"><span>What the China story tells us</span></div>
+  <p class="tr-body">Official NIA models said China would deliver NZ$225–350M/year extra. They were wrong by a factor of four — in the first year. The India NIA projects NZ$1.27B/year by 2050. That is either a floor or a ceiling, depending on one variable above all others: whether India ever opens its dairy market. Use the controls below to run the scenarios.</p>
+</section>
+
+<!-- INDIA DASHBOARD -->
+<section id="india">
+  <div class="sec-hd">
+    <span class="kicker">India FTA Dashboard</span>
+    <h2>What Does It Actually Mean for New Zealand?</h2>
+    <p>Based on MFAT National Interest Analysis (Motu Economic Research, 2026). Adjust the adoption rate and toggle the dairy scenario to see the range of outcomes.</p>
+  </div>
+
+  <div class="controls">
+    <div class="controls-inner">
+      <div class="ctrl-grp">
+        <span class="ctrl-label">Adoption Rate Multiplier</span>
+        <span class="ctrl-desc">Scale all projections. 100% = MFAT base case. 200% = China-style outperformance. 50% = conservative underperformance.</span>
+        <div class="slider-row">
+          <span class="sl-lbl">Conservative</span>
+          <input type="range" id="adoptSlider" min="50" max="200" value="100" step="5">
+          <span class="sl-lbl hi">Optimistic</span>
+          <span class="sl-val" id="adoptVal">100%</span>
+        </div>
+      </div>
+      <div class="ctrl-grp">
+        <span class="ctrl-label">Dairy Access Switch</span>
+        <span class="ctrl-desc">India currently excludes bulk dairy. Toggle ON to model NZ dairy exports at 50% of the China uptake rate — the single biggest swing factor in the entire agreement.</span>
+        <div class="toggle-row">
+          <label class="toggle">
+            <input type="checkbox" id="dairyToggle">
+            <span class="tslider"></span>
+          </label>
+          <div class="tgl-text">
+            <span class="tgl-name">Unlock Dairy Access</span>
+            <span class="tgl-note">50% of China's milk powder uptake trajectory</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="summary-row">
+    <div class="sum-card"><span class="sv">NZ$43M</span><span class="sl">Day 1 tariff savings (fixed — not model-dependent)</span></div>
+    <div class="sum-card"><span class="sv">57%</span><span class="sl">of NZ exports duty-free immediately</span></div>
+    <div class="sum-card"><span class="sv">700M</span><span class="sl">India middle class by 2030 (>EU + ASEAN combined)</span></div>
+    <div class="sum-card"><span class="sv">6.5–7%</span><span class="sl">India GDP growth rate (annual projection)</span></div>
+  </div>
+
+  <div class="cols">
+    <!-- IMMEDIATE -->
+    <div class="col c0">
+      <div class="col-hd">
+        <div class="col-period">Immediate</div>
+        <div class="col-year">2026–27</div>
+        <div class="col-sub">Deal in force, tariffs begin falling</div>
+      </div>
+      <div class="col-body">
+        <div class="mcard">
+          <div class="mlbl">Additional exports / year</div>
+          <div class="mval" id="imm-exp">NZ$340M</div>
+          <div class="mdelta" id="imm-exp-d">↑ vs no-FTA baseline</div>
+          <div class="dairy-note" id="imm-dairy">+ NZ$50M dairy (infant formula + albumins — already in deal)</div>
+        </div>
+        <div class="mcard">
+          <div class="mlbl">Annual tariff savings</div>
+          <div class="mval">NZ$43M</div>
+          <div class="mdelta">Fixed at current trade volumes</div>
+        </div>
+        <div class="ctx">
+          <strong>Key wins:</strong> Sheep/meat 33% tariff → zero on Day 1. 95%+ of forestry duty-free. Kiwifruit quota 4× current volumes. 57% of all exports duty-free from day one.
+        </div>
+        <div class="col-chart-wrap"><canvas id="immChart" height="160"></canvas></div>
+      </div>
+    </div>
+
+    <!-- 5 YEAR -->
+    <div class="col c1">
+      <div class="col-hd">
+        <div class="col-period">5 Years Out</div>
+        <div class="col-year">2031</div>
+        <div class="col-sub">Tariffs phasing, quotas expanding</div>
+      </div>
+      <div class="col-body">
+        <div class="mcard">
+          <div class="mlbl">Additional exports / year</div>
+          <div class="mval" id="fy-exp">NZ$600M</div>
+          <div class="mdelta" id="fy-exp-d">↑ interpolated from MFAT NIA trajectory</div>
+          <div class="dairy-note" id="fy-dairy">+ NZ$500M dairy uplift — 50% of China year-5 pace</div>
+        </div>
+        <div class="mcard">
+          <div class="mlbl">GDP contribution</div>
+          <div class="mval" id="fy-gdp">NZ$150M</div>
+          <div class="mdelta positive" id="fy-gdp-d">Accumulating through trade reorientation</div>
+        </div>
+        <div class="ctx">
+          <strong>By 2031:</strong> India becomes world's 3rd largest economy. Kiwifruit quota at 12,500MT. Education/services sector maturing. Manuka honey 66%→16.5% tariff fully through.
+        </div>
+        <div class="col-chart-wrap"><canvas id="fyChart" height="160"></canvas></div>
+      </div>
+    </div>
+
+    <!-- 20 YEAR -->
+    <div class="col c2">
+      <div class="col-hd">
+        <div class="col-period">20 Years Out</div>
+        <div class="col-year">2046</div>
+        <div class="col-sub">Full liberalisation, compounding gains</div>
+      </div>
+      <div class="col-body">
+        <div class="mcard">
+          <div class="mlbl">Additional exports / year</div>
+          <div class="mval" id="ty-exp">NZ$1.10B</div>
+          <div class="mdelta" id="ty-exp-d">↑ toward MFAT's 2050 projection of NZ$1.27B</div>
+          <div class="dairy-note" id="ty-dairy">+ NZ$4.5B dairy — this alone is 4× all other gains</div>
+        </div>
+        <div class="mcard">
+          <div class="mlbl">GDP contribution</div>
+          <div class="mval" id="ty-gdp">NZ$400M</div>
+          <div class="mdelta positive" id="ty-gdp-d">+0.07% of GDP (MFAT NIA base estimate by 2037)</div>
+        </div>
+        <div class="ctx">
+          <strong>The long game:</strong> All 118 services sectors open. 82% of NZ exports duty-free. If India's middle class trajectory holds, the NIA projections follow the same pattern as China's NIA — a floor, not a ceiling.
+        </div>
+        <div class="col-chart-wrap"><canvas id="tyChart" height="160"></canvas></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CALLOUT -->
+  <div class="callout">
+    <div class="callout-inner">
+      <div class="ci">
+        <h4>Total additional exports by 2046</h4>
+        <div class="big" id="co-total">NZ$1.10B/yr</div>
+        <div class="sm" id="co-total-sm">base case, no dairy</div>
+      </div>
+      <div class="ci">
+        <h4>With dairy access at 50% China rate</h4>
+        <div class="big" id="co-dairy">NZ$5.60B/yr</div>
+        <div class="sm">dairy alone adds 4× the non-dairy total</div>
+      </div>
+      <div class="ci">
+        <h4>China comparison at same point (2024)</h4>
+        <div class="big">NZ$20.85B/yr</div>
+        <div class="sm">exports to China 16 years after FTA — 8× 2008 base</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>
+    <strong>Sources:</strong> MFAT National Interest Analysis (Motu Economic Research, 2026) · NZ Treasury WP 13/15, 13/16, 13/17 · RBNZ Analytical Notes AN2014/02, AN2014/06 ·
+    RBNZ Speeches: Bollard (2009, 2012), Wheeler (2014) · Stats NZ · Treasury WP 16/05 · Beehive.govt.nz ·
+    All projections are illustrative scenarios. Dairy "50% of China rate" is a hypothetical counterfactual not in the current NZ–India FTA.
+  </p>
+</footer>
+
+<script>
+// ─── DATA ────────────────────────────────────────────────
+const chinaYears = [2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024];
+const chinaActual= [2.5, 3.5, 4.6, 5.1, 6.2, 9.5,13.0,12.0,13.0,14.1,15.3,17.0,18.2,21.5,19.1,20.76,20.85];
+// NIA implied: base ~2.5B + NZ$0.29B/yr linear uplift (midpoint of 225-350M)
+const chinaFcast = chinaYears.map((_,i)=> +(2.5 + i*0.29).toFixed(2));
+
+// India base projections (NZB/yr additional)
+const BASE = {
+  imm: { exp:0.34, gdp:0.05 },
+  fy:  { exp:0.60, gdp:0.15 },
+  ty:  { exp:1.10, gdp:0.40 }
+};
+// Dairy boost when ON (NZB — 50% of China's uptake trajectory)
+const DAIRY = { imm:0.05, fy:0.50, ty:4.50 };
+
+// Sector data (NZB) for mini charts
+const SECTORS = ['Meat', 'Timber', 'Horticulture', 'Education', 'Honey', 'Services', 'Dairy'];
+const SCOL = ['rgba(255,153,51,.85)','rgba(255,209,102,.85)','rgba(6,214,160,.85)','rgba(17,138,182,.85)','rgba(239,71,111,.85)','rgba(138,180,248,.85)','rgba(255,200,30,.95)'];
+const SEC_BASE = {
+  imm: [0.120, 0.080, 0.050, 0.040, 0.020, 0.020, 0],
+  fy:  [0.180, 0.120, 0.090, 0.085, 0.035, 0.060, 0],
+  ty:  [0.280, 0.200, 0.150, 0.160, 0.070, 0.140, 0]
+};
+
+// ─── STATE ───────────────────────────────────────────────
+let mult = 1.0;
+let dairyOn = false;
+let immChart, fyChart, tyChart;
+
+// ─── FORMAT ──────────────────────────────────────────────
+function fmt(b, dp=2) {
+  if (b >= 1) return `NZ$${b.toFixed(dp)}B`;
+  return `NZ$${(b*1000).toFixed(0)}M`;
+}
+
+// ─── CHINA CHART ─────────────────────────────────────────
+function initChinaChart() {
+  const ctx = document.getElementById('chinaChart').getContext('2d');
+  new Chart(ctx, {
+    type:'line',
+    data:{
+      labels: chinaYears,
+      datasets:[
+        {
+          label:'Actual NZ Exports to China (NZB)',
+          data: chinaActual,
+          borderColor:'#f0a500',
+          backgroundColor:'rgba(240,165,0,.08)',
+          borderWidth:2.5,
+          pointRadius:4,
+          pointBackgroundColor:'#f0a500',
+          tension:.35,
+          fill:true
+        },
+        {
+          label:'NIA Forecast (NZ$225–350M/yr uplift)',
+          data: chinaFcast,
+          borderColor:'rgba(136,146,164,.5)',
+          borderWidth:2,
+          borderDash:[6,4],
+          pointRadius:2,
+          tension:.3,
+          fill:false
+        }
+      ]
+    },
+    options:{
+      responsive:true,
+      interaction:{mode:'index',intersect:false},
+      plugins:{
+        legend:{
+          labels:{color:'rgba(255,255,255,.7)',font:{size:12}}
+        },
+        tooltip:{
+          backgroundColor:'rgba(10,22,40,.95)',
+          borderColor:'rgba(240,165,0,.3)',
+          borderWidth:1,
+          titleColor:'#f0a500',
+          bodyColor:'#c5ccd6',
+          callbacks:{
+            label(ctx){
+              const gap = ctx.datasetIndex===0 && ctx.dataIndex>0
+                ? ` (forecast gap: NZ${(chinaActual[ctx.dataIndex]-chinaFcast[ctx.dataIndex]).toFixed(2)}B)` : '';
+              return ` ${ctx.dataset.label}: NZ$${ctx.parsed.y.toFixed(2)}B${gap}`;
+            }
+          }
+        }
+      },
+      scales:{
+        x:{ticks:{color:'rgba(136,146,164,.8)',font:{size:11}},grid:{color:'rgba(255,255,255,.04)'}},
+        y:{
+          ticks:{color:'rgba(136,146,164,.8)',font:{size:11},callback:v=>`NZ$${v}B`},
+          grid:{color:'rgba(255,255,255,.04)'},
+          title:{display:true,text:'NZB per year',color:'rgba(136,146,164,.6)',font:{size:11}}
+        }
+      }
+    }
+  });
+}
+
+// ─── MINI CHARTS ─────────────────────────────────────────
+function makeBarData(period) {
+  const base = SEC_BASE[period].map(v => +(v*mult).toFixed(3));
+  if (dairyOn) base[6] = DAIRY[period];
+  return base;
+}
+
+function makeMiniChart(id, period, colAccent) {
+  const ctx = document.getElementById(id).getContext('2d');
+  const chart = new Chart(ctx, {
+    type:'bar',
+    data:{
+      labels: SECTORS,
+      datasets:[{
+        label:'Additional exports (NZB/yr)',
+        data: makeBarData(period),
+        backgroundColor: SCOL,
+        borderRadius:5,
+        borderSkipped:false
+      }]
+    },
+    options:{
+      responsive:true,
+      plugins:{
+        legend:{display:false},
+        tooltip:{
+          backgroundColor:'rgba(10,22,40,.95)',
+          borderColor:`rgba(${colAccent},.3)`,
+          borderWidth:1,
+          titleColor:`rgba(${colAccent},1)`,
+          bodyColor:'#c5ccd6',
+          callbacks:{label:ctx=>`${fmt(ctx.parsed.y)}/yr`}
+        }
+      },
+      scales:{
+        x:{ticks:{color:'rgba(136,146,164,.75)',font:{size:9}},grid:{display:false}},
+        y:{
+          ticks:{color:'rgba(136,146,164,.75)',font:{size:9},callback:v=>v>=1?`$${v}B`:`$${(v*1000).toFixed(0)}M`},
+          grid:{color:'rgba(255,255,255,.04)'}
+        }
+      }
+    }
+  });
+  return chart;
+}
+
+function initMiniCharts() {
+  immChart = makeMiniChart('immChart','imm','255,153,51');
+  fyChart  = makeMiniChart('fyChart', 'fy', '255,153,51');
+  tyChart  = makeMiniChart('tyChart', 'ty', '255,209,102');
+}
+
+function updateMiniChart(chart, period) {
+  const newData = makeBarData(period);
+  chart.data.datasets[0].data = newData;
+  chart.update('active');
+}
+
+// ─── DASHBOARD UPDATE ─────────────────────────────────────
+function updateDashboard() {
+  const dairyBoostImm = dairyOn ? DAIRY.imm : 0;
+  const dairyBoostFy  = dairyOn ? DAIRY.fy  : 0;
+  const dairyBoostTy  = dairyOn ? DAIRY.ty  : 0;
+
+  const immExp = BASE.imm.exp * mult + dairyBoostImm;
+  const fyExp  = BASE.fy.exp  * mult + dairyBoostFy;
+  const tyExp  = BASE.ty.exp  * mult + dairyBoostTy;
+
+  const fyGdp  = BASE.fy.gdp  * mult + (dairyOn ? 0.08 : 0);
+  const tyGdp  = BASE.ty.gdp  * mult + (dairyOn ? 0.80 : 0);
+
+  // Update text
+  set('imm-exp',  fmt(immExp));
+  set('imm-exp-d','↑ vs no-FTA baseline');
+  set('fy-exp',   fmt(fyExp));
+  set('fy-exp-d', '↑ interpolated from MFAT NIA trajectory');
+  set('ty-exp',   fmt(tyExp));
+  set('ty-exp-d', '↑ toward MFAT 2050 projection');
+  set('fy-gdp',   fmt(fyGdp));
+  set('fy-gdp-d', 'Accumulating through trade reorientation');
+  set('ty-gdp',   fmt(tyGdp));
+  set('ty-gdp-d', '+0.07% of GDP scaled by adoption rate');
+
+  // Dairy notes
+  tog('imm-dairy', dairyOn);
+  tog('fy-dairy',  dairyOn);
+  tog('ty-dairy',  dairyOn);
+
+  // Callout
+  set('co-total',    fmt(tyExp));
+  set('co-total-sm', dairyOn
+    ? `incl. NZ${fmt(DAIRY.ty)} dairy uplift`
+    : `base case, no dairy access`);
+
+  const coD = BASE.ty.exp * mult + DAIRY.ty;
+  set('co-dairy', fmt(coD));
+
+  // Mini charts
+  updateMiniChart(immChart,'imm');
+  updateMiniChart(fyChart, 'fy');
+  updateMiniChart(tyChart, 'ty');
+}
+
+function set(id, txt) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = txt;
+}
+
+function tog(id, on) {
+  const el = document.getElementById(id);
+  if (el) el.classList.toggle('on', on);
+}
+
+// ─── SLIDER ──────────────────────────────────────────────
+const slider = document.getElementById('adoptSlider');
+const sliderVal = document.getElementById('adoptVal');
+
+slider.addEventListener('input', () => {
+  mult = slider.value / 100;
+  sliderVal.textContent = `${slider.value}%`;
+  // Update slider fill
+  const pct = ((slider.value - 50) / 150) * 100;
+  slider.style.background = `linear-gradient(to right, var(--saffron) ${pct}%, rgba(255,255,255,.1) ${pct}%)`;
+  updateDashboard();
+});
+
+// ─── TOGGLE ──────────────────────────────────────────────
+document.getElementById('dairyToggle').addEventListener('change', e => {
+  dairyOn = e.target.checked;
+  updateDashboard();
+});
+
+// ─── TIMELINE SCROLL ─────────────────────────────────────
+const tlObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.tl-row').forEach(el => tlObserver.observe(el));
+
+// ─── INIT ─────────────────────────────────────────────────
+initChinaChart();
+initMiniCharts();
+updateDashboard();
+
+// Stagger timeline entries on load
+document.querySelectorAll('.tl-row').forEach((el, i) => {
+  el.style.transitionDelay = `${i * 0.05}s`;
+});
+</script>
+</body>
+</html>
