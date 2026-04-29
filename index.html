@@ -199,13 +199,45 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;heigh
 .ci .big{font-size:2.3rem;font-weight:800;color:var(--saffron);transition:all .45s ease}
 .ci .sm{font-size:1.14rem;color:var(--gray);margin-top:.25rem}
 
+/* SECTOR SPOTLIGHT */
+#sectors{background:var(--navy);padding-bottom:6rem}
+.sector-grid{max-width:1200px;margin:0 auto;padding:0 2rem;display:grid;grid-template-columns:repeat(5,1fr);gap:1.25rem}
+.sector-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.75rem 1.5rem;display:flex;flex-direction:column;gap:.85rem;position:relative;overflow:hidden}
+.sector-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.sc-sheep::before{background:var(--gold)}
+.sc-wine::before{background:#c084fc}
+.sc-honey::before{background:var(--saffron)}
+.sc-edu::before{background:#60a5fa}
+.sc-tech::before{background:#34d399}
+.sc-name{font-size:1rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase}
+.sc-sheep .sc-name{color:var(--gold)}
+.sc-wine .sc-name{color:#c084fc}
+.sc-honey .sc-name{color:var(--saffron)}
+.sc-edu .sc-name{color:#60a5fa}
+.sc-tech .sc-name{color:#34d399}
+.sc-tariff{padding:.75rem 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);display:flex;flex-direction:column;gap:.3rem}
+.sc-tariff-bar{display:flex;align-items:center;gap:.5rem}
+.sc-from{font-size:1.4rem;font-weight:800;color:#f87;text-decoration:line-through;opacity:.8}
+.sc-arr{color:var(--gray);font-size:.85rem}
+.sc-to{font-size:1.4rem;font-weight:800;color:#6d6}
+.sc-tariff-lbl{font-size:1rem;color:var(--gray)}
+.sc-uplift-n{font-size:1.6rem;font-weight:800;color:var(--white);line-height:1}
+.sc-uplift-l{font-size:1rem;color:var(--gray);margin-top:.25rem}
+.sc-note{font-size:1rem;color:var(--gray);line-height:1.55;margin-top:auto}
+.sector-foot{max-width:1200px;margin:1.75rem auto 0;padding:0 2rem;text-align:center}
+.sector-foot p{font-size:1rem;color:var(--gray);line-height:1.6}
+
 /* FOOTER */
 footer{background:#050c14;padding:3rem 2rem;text-align:center;border-top:1px solid rgba(255,255,255,.05)}
 footer p{font-size:1rem;color:var(--gray);line-height:1.7;max-width:700px;margin:0 auto}
 footer strong{color:var(--gray2)}
 
 /* RESPONSIVE */
+@media(max-width:1100px){
+  .sector-grid{grid-template-columns:repeat(3,1fr)}
+}
 @media(max-width:860px){
+  .sector-grid{grid-template-columns:repeat(2,1fr)}
 
   /* Hero */
   .hero-stats{grid-template-columns:1fr 1fr}
@@ -264,6 +296,7 @@ footer strong{color:var(--gray2)}
 
 @media(max-width:500px){
   .hero-stats{grid-template-columns:1fr}
+  .sector-grid{grid-template-columns:1fr}
   .tl-wrap{padding:0 1rem}
   .c-stat,.f-stat{font-size:1.14rem}
   .c-title,.f-title{font-size:1.08rem}
@@ -278,6 +311,7 @@ footer strong{color:var(--gray2)}
   <ul class="nav-links">
     <li><a href="#timeline">China Story</a></li>
     <li><a href="#india">India Forecast</a></li>
+    <li><a href="#sectors">Sectors</a></li>
   </ul>
 </nav>
 
@@ -541,7 +575,7 @@ footer strong{color:var(--gray2)}
     <div class="controls-inner">
       <div class="ctrl-grp">
         <span class="ctrl-label">Apply the China Precedent</span>
-        <span class="ctrl-desc">The China NIA was underestimated by a factor of 4 — preselected here. Slide left to read the MFAT base case, or right to explore what a China-scale trajectory could mean for India.</span>
+        <span class="ctrl-desc">The China NIA was underestimated by a factor of 4 — preselected here. Slide left for the MFAT base case, or right to explore what a China-scale trajectory could mean for New Zealand exporters.</span>
         <div class="slider-row">
           <span class="sl-lbl">NIA base (1×)</span>
           <input type="range" id="adoptSlider" min="1" max="6" value="4" step="1">
@@ -672,6 +706,113 @@ footer strong{color:var(--gray2)}
         <div class="sm">exports to China 16 years after FTA — 8× 2008 base</div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- SECTOR SPOTLIGHT -->
+<section id="sectors">
+  <div class="sec-hd">
+    <span class="kicker">Sector by Sector</span>
+    <h2>Where New Zealand Wins</h2>
+    <p>Five industries where the tariff cuts, market access provisions, and India's growth trajectory combine to create the biggest opportunity for NZ exporters.</p>
+  </div>
+
+  <div class="sector-grid">
+
+    <!-- SHEEP / LAMB -->
+    <div class="sector-card sc-sheep">
+      <div class="sc-name">Sheepmeat</div>
+      <div class="sc-tariff">
+        <div class="sc-tariff-bar">
+          <span class="sc-from">30%</span>
+          <span class="sc-arr">&#8594;</span>
+          <span class="sc-to">0%</span>
+        </div>
+        <div class="sc-tariff-lbl">Tariff eliminated over 7 years</div>
+      </div>
+      <div>
+        <div class="sc-uplift-n">NZ$150M<span style="font-size:1rem;font-weight:400">/yr</span></div>
+        <div class="sc-uplift-l">Additional exports by 2046 — NIA base</div>
+      </div>
+      <div class="sc-note">India's 200M+ Muslim population is one of the world's largest lamb-consuming demographics. NZ is the dominant global supplier. Zero tariff changes the economics entirely.</div>
+    </div>
+
+    <!-- WINE -->
+    <div class="sector-card sc-wine">
+      <div class="sc-name">Wine</div>
+      <div class="sc-tariff">
+        <div class="sc-tariff-bar">
+          <span class="sc-from">150%</span>
+          <span class="sc-arr">&#8594;</span>
+          <span class="sc-to">Phased</span>
+        </div>
+        <div class="sc-tariff-lbl">Highest tariff in the agreement — phased down</div>
+      </div>
+      <div>
+        <div class="sc-uplift-n">NZ$45M<span style="font-size:1rem;font-weight:400">/yr</span></div>
+        <div class="sc-uplift-l">Additional exports by 2046 — NIA base</div>
+      </div>
+      <div class="sc-note">At 150%, NZ wine effectively didn't exist in India. India's urban premium wine market is growing at ~25%/yr. Even a partial tariff reduction opens a door that has been shut since independence.</div>
+    </div>
+
+    <!-- MANUKA HONEY -->
+    <div class="sector-card sc-honey">
+      <div class="sc-name">Manuka Honey</div>
+      <div class="sc-tariff">
+        <div class="sc-tariff-bar">
+          <span class="sc-from">30%</span>
+          <span class="sc-arr">&#8594;</span>
+          <span class="sc-to">0%</span>
+        </div>
+        <div class="sc-tariff-lbl">Tariff eliminated under FTA</div>
+      </div>
+      <div>
+        <div class="sc-uplift-n">NZ$70M<span style="font-size:1rem;font-weight:400">/yr</span></div>
+        <div class="sc-uplift-l">Additional exports by 2046 — NIA base</div>
+      </div>
+      <div class="sc-note">Manuka honey is one of NZ's most defensible premium products. India's Ayurveda-driven health food market — already worth US$18B — is a natural home for certified MGO Manuka.</div>
+    </div>
+
+    <!-- EDUCATION -->
+    <div class="sector-card sc-edu">
+      <div class="sc-name">Education</div>
+      <div class="sc-tariff">
+        <div class="sc-tariff-bar" style="gap:.75rem">
+          <span style="font-size:1.1rem;font-weight:800;color:#f87">Restricted</span>
+          <span class="sc-arr">&#8594;</span>
+          <span style="font-size:1.1rem;font-weight:800;color:#6d6">Open</span>
+        </div>
+        <div class="sc-tariff-lbl">Qualification recognition + streamlined pathways</div>
+      </div>
+      <div>
+        <div class="sc-uplift-n">NZ$160M<span style="font-size:1rem;font-weight:400">/yr</span></div>
+        <div class="sc-uplift-l">Additional education exports by 2046 — NIA base</div>
+      </div>
+      <div class="sc-note">India already sends NZ's largest cohort of international students. The FTA removes structural barriers — recognition commitments and visa pathways — that have capped growth for a decade.</div>
+    </div>
+
+    <!-- TECH / SERVICES -->
+    <div class="sector-card sc-tech">
+      <div class="sc-name">Tech &amp; Services</div>
+      <div class="sc-tariff">
+        <div class="sc-tariff-bar" style="gap:.75rem">
+          <span style="font-size:1.1rem;font-weight:800;color:#f87">Restricted</span>
+          <span class="sc-arr">&#8594;</span>
+          <span style="font-size:1.1rem;font-weight:800;color:#6d6">Open</span>
+        </div>
+        <div class="sc-tariff-lbl">Digital trade chapter + 118 services sectors</div>
+      </div>
+      <div>
+        <div class="sc-uplift-n">NZ$95M<span style="font-size:1rem;font-weight:400">/yr</span></div>
+        <div class="sc-uplift-l">Additional services exports by 2046 — NIA base</div>
+      </div>
+      <div class="sc-note">India's digital economy will be worth US$1T by 2030. NZ's agritech, fintech, and software sectors are well-positioned — but have been held back by market access restrictions the FTA now removes.</div>
+    </div>
+
+  </div>
+
+  <div class="sector-foot">
+    <p>Figures shown at MFAT NIA base case (1×). <a href="#india">Apply the China Precedent</a> in the dashboard above to scale all projections — at 4×, these numbers look very different.</p>
   </div>
 </section>
 
